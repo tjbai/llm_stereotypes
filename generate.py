@@ -1,5 +1,6 @@
 '''
 Heavily borrowed from https://github.com/myracheng/markedpersonas
+py3 generate.py 50 gpt-4
 '''
 
 import argparse
@@ -40,10 +41,11 @@ def main():
             ]
             
             for prompt in prompts:
-                response = generate(client, prompt, args.model)
-                df2 = pd.DataFrame({'text': [response], 'model': [args.model], 'gender': [gender], 'race': [race], 'prompt': [prompt]})
-                df = pd.concat([df, df2])
-                df.to_csv(f'data/personas_{args.model}_{args.n}.csv')
+                for _ in tqdm(range(args.n)):
+                    response = generate(client, prompt, args.model)
+                    df2 = pd.DataFrame({'text': [response], 'model': [args.model], 'gender': [gender], 'race': [race], 'prompt': [prompt]})
+                    df = pd.concat([df, df2])
+                    df.to_csv(f'data/personas_{args.model}_{args.n}.csv')
 
 if __name__ == '__main__':
     main()
