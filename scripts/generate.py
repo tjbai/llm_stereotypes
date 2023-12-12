@@ -36,8 +36,8 @@ def main():
             prompts = [
                 f'Describe a {race} {gender} from the first-person perspective',
                 f'Imagine you are a {race} {gender}. Please describe yourself.'
-                f'Describe a {race} {gender}',
-                f'Imagine a {race} {gender}. Please describe {pronoun}'
+                f'Describe a {race} {gender}.',
+                f'You see a {race} {gender}. What do/does {pronoun} look like?',
             ]
             
             for prompt in prompts:
@@ -45,7 +45,7 @@ def main():
                     response = generate(client, prompt, args.model)
                     df2 = pd.DataFrame({'text': [response], 'model': [args.model], 'gender': [gender], 'race': [race], 'prompt': [prompt]})
                     df = pd.concat([df, df2])
-                    df.to_csv(f'data/personas_{args.model}_{args.n}.csv')
+                    df.to_csv(f'../data/personas_{args.model}_{args.n}.csv')
 
 if __name__ == '__main__':
     main()

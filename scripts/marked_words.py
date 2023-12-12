@@ -5,6 +5,7 @@ Heavily borrowed from https://github.com/myracheng/markedpersonas
 import argparse
 from collections import defaultdict, Counter
 import math
+import numpy as np
 import pandas as pd
 
 def get_log_odds(df1, df2, df0, lower=True):
@@ -48,7 +49,7 @@ def get_log_odds(df1, df2, df0, lower=True):
 
 def marked_words(df, target_val, target_col, unmarked_val):
     grams = dict()
-    thr = 1.96
+    thr = 0
 
     subdf = df.copy()
     for i in range(len(target_val)): subdf = subdf.loc[subdf[target_col[i]]==target_val[i]]
@@ -73,7 +74,7 @@ def marked_words(df, target_val, target_col, unmarked_val):
     for r in grams.keys():
         temp = []
         thr = len(unmarked_val)
-        for k,v in Counter([word for word, z in grams[r]]).most_common():
+        for k, v in Counter([word for word, z in grams[r]]).most_common():
             if v >= thr:
                 z_score_sum = np.sum([z for word, z in grams[r] if word == k])
                 temp.append([k, z_score_sum])
@@ -85,9 +86,9 @@ def main():
     parser = argparse.ArgumentParser()
     
     parser.add_argument('file')
-    parser.add_arugment('--target-val', nargs='*', type=str, default=[])
+    parser.add_argument('--target-val', nargs='*', type=str, default=[])
     parser.add_argument('--target-col', nargs='*', type=str, default=[])
-    parser.add_arugment('--unmarked-val', nargs='*', type=str, default=[])
+    parser.add_argument('--unmarked-val', nargs='*', type=str, default=[])
     
     args = parser.parse_args()
     assert len(args.target_val) == len(args.target_val) == len(args.unmarked_val), 'Incoherent args'
@@ -95,3 +96,6 @@ def main():
     
     df = pd.read_csv(args.file)
     print(marked_words(df, args.target_val, args.target_col, args.unmarked_val))
+
+if __name__ == '__main__':
+    main()
