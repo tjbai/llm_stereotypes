@@ -1,4 +1,4 @@
-import Navigator from "../../lib/components/Home/Navigator";
+import Navigator from "../lib/components/Home/Navigator";
 import styles from "./page.module.css";
 
 export default function Home() {
