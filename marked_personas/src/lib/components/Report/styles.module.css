@@ -1,0 +1,22 @@
+.galleryContainer {
+    display: flex;
+    overflow-x: auto;
+    white-space: wrap;
+    max-width: 100%;
+    flex-direction: column;
+    text-overflow: ellipsis;
+}
+
+.imageContainer {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: wrap;
+}
+
+.description {
+    margin-left: 10px;
+    max-height: 400px;
+    text-overflow: ellipsis;
+    font-size: 17px;
+}

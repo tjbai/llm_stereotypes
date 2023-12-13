@@ -1,8 +1,8 @@
 "use client";
 
-import styles from "./styles.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import styles from "./styles.module.css";
 
 export default function Navigator() {
   const [race, setRace] = useState<Race>("");

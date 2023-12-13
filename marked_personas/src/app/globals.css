@@ -3,15 +3,19 @@ html {
   margin: 0px;
   background-color: #e8e8e8;
   min-height: 100vh;
+  max-width: 100vw;
   display: flex;
   justify-content: center;
+  overflow-x: auto;
 } 
 
 body {
   display: flex;
   flex-direction: row;
+  max-width: 90%;
   width: 90%;
   padding-top: 10px;
+  overflow-x: auto;
 }
 
 h1 {

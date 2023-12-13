@@ -2,4 +2,7 @@
 venv/*
 data/*
 __pycache__/*
+**/__pycache__/*
+.DS_Store
 scripts/venv/*
+scripts/service_key.json
