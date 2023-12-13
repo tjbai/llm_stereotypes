@@ -113,13 +113,13 @@ def weight_personas():
         top_persona_ref.set(sorted(personas_weights, key=lambda x: x[1], reverse=True))
         
 if __name__ == '__main__':
-    for race in ['asian', 'black', 'middle-eastern', 'latino', 'latina']:
-        print(f'generating for {race}')
-        gen_images(race=race)
+    # for race in ['asian', 'black', 'middle-eastern', 'latino', 'latina']:
+    #     print(f'generating for {race}')
+    #     gen_images(race=race)
         
-    # for gender in ['woman', 'nonbinary']:
-    #     print(f'generating for {gender}')
-    #     gen_images(gender=gender)
+    for gender in ['woman', 'nonbinary']:
+        print(f'generating for {gender}')
+        gen_images(gender=gender)
         
     # for race in ['asian', 'black', 'middle-eastern', 'latino', 'latina']:
     #     for gender in ['woman', 'nonbinary']:
