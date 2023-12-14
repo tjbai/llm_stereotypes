@@ -31,20 +31,10 @@ def init_marked_words():
         personas[race] = filtered
         print(race, len(marked))
         print(race, len(filtered))
-
-    for gender in ['woman', 'nonbinary person']:
-        marked = marked_words(df, target_val=[gender], target_col=['gender'], unmarked_val=['man'])
-        filtered = df[df['race'] == race]['text'].tolist()
-        if gender == 'nonbinary person': gender = 'nonbinary'
-        words[gender] = marked
-        personas[gender] = filtered
-        print(gender, len(marked))
-        print(gender, len(filtered))
         
     for race in ['asian', 'black', 'middle-eastern', 'latino', 'latina']:
-        for gender in ['woman', 'nonbinary person']:
-            if race == 'latino' and gender == 'woman': continue
-            if race == 'latina' and gender == 'nonbinary person': continue
+        for gender in ['man', 'woman', 'nonbinary person']:
+            if race in {'latino', 'latina'}: continue
             marked = marked_words(df, target_val=[gender, race], target_col=['gender', 'race'], unmarked_val=['white', 'man'])
             filtered = df[df['race'] == race]
             filtered = filtered[df['gender'] == gender]['text'].tolist()
@@ -84,11 +74,15 @@ def gen_images(race=None, gender=None, n=20):
                 'Accept': 'application/json',
                 'Authorization': f'Bearer {STABILITY_KEY}'
             },
-            json={'text_prompts': [{'text': t}]}
+            json={
+                'text_prompts': [{'text': t, 'weight': 0.7}],
+                'cfg_scale': 20,
+                'steps': 40,
+                }
         )
         
         if response.status_code != 200:
-            raise Exception('Encountered', response.status_code)
+            raise Exception('Encountered', response.status_code, response.content)
         
         payload = response.json()
         for image in payload['artifacts']:
@@ -113,17 +107,4 @@ def weight_personas():
         top_persona_ref.set(sorted(personas_weights, key=lambda x: x[1], reverse=True))
         
 if __name__ == '__main__':
-    # for race in ['asian', 'black', 'middle-eastern', 'latino', 'latina']:
-    #     print(f'generating for {race}')
-    #     gen_images(race=race)
-        
-    for gender in ['woman', 'nonbinary']:
-        print(f'generating for {gender}')
-        gen_images(gender=gender)
-        
-    # for race in ['asian', 'black', 'middle-eastern', 'latino', 'latina']:
-    #     for gender in ['woman', 'nonbinary']:
-    #         if race == 'latino' and gender == 'woman': continue
-    #         if race == 'latina' and gender == 'nonbinary person': continue
-    #         print(f'generating for {race} {gender}')
-    #         gen_images(race=race, gender=gender)
+   pass

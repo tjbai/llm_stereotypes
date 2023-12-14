@@ -7,13 +7,31 @@ import styles from "./styles.module.css";
 export default function Navigator() {
   const [race, setRace] = useState<Race>("");
   const [gender, setGender] = useState<Gender>("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
+  // so hacky
   const handleNav = () => {
-    if (!race && !gender) return;
+    if (!race || !gender) {
+      setError("Must select menu options");
+      return;
+    }
     let url = "/report?";
-    if (race) url += `r=${race}`;
-    if (gender) url += `&g=${gender}`;
+    if (gender == "All") {
+      if (race == "Latinx") url += `r=latino`;
+      else url += `r=${race}`;
+    } else {
+      if (race == "Latinx" && gender == "Woman") {
+        url += `r=latina`;
+      } else if (race == "Latinx" && gender == "Man") {
+        url += `r=latino`;
+      } else if (race == "Latinx" && gender == "Nonbinary") {
+        url += `r=latino&g=nonbinary`;
+      } else {
+        url += `r=${race}&g=${gender}`;
+      }
+    }
+    setError("");
     router.push(url);
   };
 
@@ -32,7 +50,7 @@ export default function Navigator() {
         onChange={(e) => setGender(e.target.value as Gender)}
       >
         <option value={""}>Select</option>
-        {["Man", "Woman", "Nonbinary"].map((g) => (
+        {["All", "Man", "Woman", "Nonbinary"].map((g) => (
           <option key={g} value={g}>
             {g}
           </option>
