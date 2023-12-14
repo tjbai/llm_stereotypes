@@ -39,10 +39,10 @@ export default async function Report({
 
   return (
     <div className={styles.container}>
-      <h1>Marked Personas</h1>
       <Gallery
         images={report["portraits"]}
         descriptions={report["top_personas"]}
+        query={report["words"].map((x: string[]) => x[0])}
       />
     </div>
   );

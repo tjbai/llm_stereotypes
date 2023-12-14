@@ -2,9 +2,13 @@
     display: flex;
     overflow-x: auto;
     white-space: wrap;
-    max-width: 100%;
+    max-width: 90%;
     flex-direction: column;
     text-overflow: ellipsis;
+    position: relative;
+    height: calc(100vh - 100px);
+    top: 100px;
+    position: fixed;
 }
 
 .imageContainer {
@@ -19,4 +23,13 @@
     max-height: 400px;
     text-overflow: ellipsis;
     font-size: 17px;
+    overflow: scroll;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px dotted black;
+}
+
+.highlight {
+    color: blue;
+    font-weight: bold;
 }
