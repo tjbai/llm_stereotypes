@@ -20,3 +20,8 @@
     text-decoration: none;
     color: black;
 }
+
+.error {
+    margin-left: 10px;
+    color: red;
+}

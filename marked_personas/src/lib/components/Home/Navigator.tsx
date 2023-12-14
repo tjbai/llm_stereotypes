@@ -8,12 +8,13 @@ export default function Navigator() {
   const [race, setRace] = useState<Race>("");
   const [gender, setGender] = useState<Gender>("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   // so hacky
   const handleNav = () => {
     if (!race || !gender) {
-      setError("Must select menu options");
+      setError("Must select menu options!");
       return;
     }
     let url = "/report?";
@@ -32,7 +33,9 @@ export default function Navigator() {
       }
     }
     setError("");
+    setLoading(true);
     router.push(url);
+    setTimeout(() => setLoading(false), 1000);
   };
 
   return (
@@ -58,6 +61,8 @@ export default function Navigator() {
         Gender persona
       </select>
       <button onClick={handleNav}>Go</button>
+      <text className={styles.error}>{error}</text>
+      <text className={styles.loading}>{loading ? "Loading..." : ""}</text>
     </div>
   );
 }
